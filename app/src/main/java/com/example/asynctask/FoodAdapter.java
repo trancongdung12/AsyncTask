@@ -1,5 +1,7 @@
 package com.example.asynctask;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
-
+    private Context context;
     private List<Food> mFood;
 
-    public FoodAdapter(List<Food> mFood) {
+    public FoodAdapter(Context context , List<Food> mFood) {
+
+        this.context = context;
         this.mFood = mFood;
     }
 
@@ -32,9 +36,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         if(food ==null){
             return;
         }
-        holder.imgFood.setImageResource(food.getImage());
+        int id = context.getResources().getIdentifier(food.getImage(), "drawable", context.getPackageName());
+        Log.d("id", String.valueOf(id));
+        holder.imgFood.setImageDrawable(context.getResources().getDrawable(id));
         holder.nameFood.setText(food.getName());
-        //holder.descFood.setText(food.getDescription());
+        holder.descFood.setText(food.getDescription());
+        holder.rateFood.setText(food.getRate());
+        holder.minuteFood.setText(food.getMinute());
+        holder.kilometFood.setText(food.getKilometer());
 
     }
 
@@ -50,14 +59,22 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
         private ImageView imgFood;
         private TextView nameFood;
-//        private TextView descFood;
+        private TextView descFood;
+        private TextView rateFood;
+        private TextView minuteFood;
+        private TextView kilometFood;
 
 
         public FoodViewHolder(@NonNull View itemView) {
             super(itemView);
             imgFood = itemView.findViewById(R.id.img_food);
             nameFood =itemView.findViewById(R.id.name_food);
-//            descFood = itemView.findViewById(R.id.desc_food);
+            descFood = itemView.findViewById(R.id.desc_food);
+            rateFood = itemView.findViewById(R.id.star_rate);
+            minuteFood = itemView.findViewById(R.id.minute);
+            kilometFood = itemView.findViewById(R.id.kilomet);
+
+
         }
     }
 }
